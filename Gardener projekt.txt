@@ -1,0 +1,13 @@
+Gardener projekt
+
+A futtatáshoz szükséges node, npm, ng, mongoose. Ezeket a hivatalos oldalakról lehet letölteni. HA ezek mind rendelkezésre állnak,
+akkor, ha nem fut a mongo el kell indítani: net start MongoDB
+
+ - cd Backend
+ - npm install
+ - npm run build + npm run start, ha ez nem működik akkor npx tsc
+ 
+majd másik terminálban:
+ - cd Frontend2
+ - npm install
+ - ng serve
