@@ -1,0 +1,22 @@
+<h1 class="center-text">Üdv a GARDENER honlapján!</h1>
+
+<form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Email</mat-label>
+    <input matInput type="email" formControlName="email">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Jelszó</mat-label>
+    <input matInput type="password" formControlName="password">
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit">
+    Bejelentkezés
+  </button>
+</form>
+
+<h4 class="center-text">Nincs még profilod?</h4>
+<button class="center" color="primary" type="button" (click)="goRegister()">
+    Regisztráció itt
+</button>

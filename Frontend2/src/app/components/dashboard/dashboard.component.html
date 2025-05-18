@@ -1,0 +1,233 @@
+<div class="container-fluid">
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a href="#" class="navbar-brand">Online Közösségi Kertészeti Fórum</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse">
+        <span class="navbar toggler icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <form class="d flex me-3 ms-auto">
+          <button
+            class="btn btn-outline-success"
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#newPostModal"
+          >
+            Új hirdetés feladása
+          </button>
+
+          <button
+            class="btn btn-outline-success"
+            type="button"
+            (click)="goPlants()"
+          >
+            Növénykereső
+          </button>
+
+          <button
+            class="btn btn-outline-success"
+            type="button"
+            (click)="goProject()"
+          >
+            Projekteim
+          </button>
+
+          <button
+            class="btn btn-outline-success"
+            type="button"
+            (click)="logout()"
+          >
+            Kijelentkezés
+          </button>
+        </form>
+      </div>
+    </div>
+    
+  </nav>
+
+  <!--Navbar-->
+
+  <!-- post details -->
+  
+  <div class="row mt-3 p-1">
+    <div class="col-md-3 col-sm-12" *ngFor="let post of allPosts">
+      <div class="card" style="width: 22rem">
+        <div class="card-body">
+          <h5 class="card-title">{{ post.title }}</h5>
+          <h6 class="card-subtitle mb-2 text-body-secondary">
+            {{ post.username }}
+          </h6>
+          <p class="card-text">
+            {{ post.content }}
+          </p>
+        </div>
+        <div class="card-footer">
+          <button
+            class="btn btn-outline-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#editPostModal"
+            type="button"
+            (click)="editPost(post)"
+          >
+            Módosítás
+          </button>
+          <div class="btn btn-outline-danger" (click)="deletePostData(post)">
+            Törlés
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Új poszt készítése -->
+  <div
+    class="modal fade"
+    id="newPostModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Új hirdetés feladása</h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="title" class="form-label"
+                >Cím</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="title"
+                [(ngModel)]="title"
+                [ngModelOptions]="{standalone: true}"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="content" class="form-label"
+                >Tartalom</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="content"
+                [(ngModel)]="content"
+                [ngModelOptions]="{standalone: true}"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="username" class="form-label"
+                >Felhasználó</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="username"
+                [(ngModel)]="username"
+                [ngModelOptions]="{standalone: true}"
+              />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Bezárás
+          </button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+            (click)="createPostData()">Mentés</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Poszt szerkesztése -->
+  <div
+    class="modal fade"
+    id="editPostModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Módosítás</h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+            <form>
+            <div class="mb-3">
+              <label for="title" class="form-label"
+                >Cím</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="title"
+                [(ngModel)]="title"
+                [ngModelOptions]="{standalone: true}"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="content" class="form-label"
+                >Tartalom</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="content"
+                [(ngModel)]="content"
+                [ngModelOptions]="{standalone: true}"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="username" class="form-label"
+                >Felhasználó</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="username"
+                [(ngModel)]="username"
+                [ngModelOptions]="{standalone: true}"
+              />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Bezárás
+          </button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+            (click)="updatePost()">Mentés</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

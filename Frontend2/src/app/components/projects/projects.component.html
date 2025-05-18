@@ -1,0 +1,187 @@
+<div class="container-fluid">
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a href="#" class="navbar-brand">Projekteim</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse">
+        <span class="navbar toggler icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <form class="d-flex me-3 ms-auto">
+          <button
+            class="btn btn-outline-success"
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#newProjectModal"
+          >
+            Új Projekt Létrehozása
+          </button>
+
+          <button
+            class="btn btn-outline-success"
+            type="button"
+            (click)="goPlants()"
+          >
+            Növénykereső
+          </button>
+
+          <button
+            class="btn btn-outline-success"
+            type="button"
+            (click)="goProject()"
+          >
+            Fórum
+          </button>
+
+          <button
+            class="btn btn-outline-success"
+            type="button"
+            (click)="logout()"
+          >
+            Kijelentkezés
+          </button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Project lista -->
+  <div class="row mt-3 p-1">
+    <div class="col-md-3 col-sm-12" *ngFor="let project of allProjects">
+      <div class="card" style="width: 22rem">
+        <div class="card-body">
+          <h5 class="card-title">{{ project.title }}</h5>
+          <span>Projekt kezdetének időpontja:</span>
+          <p class="card-text">
+            {{ project.startDate }}
+          </p>
+          <span>Projekt leírása:</span>
+          <p class="card-text">
+            {{ project.description }}
+          </p>
+          <div *ngIf="project.relatedPlants!.length > 0">
+            <span>Projekthez kapcsolodó növények:</span>
+            <p class="card-text" *ngFor="let noveny of project.relatedPlants">
+              🌿 {{ noveny }}
+            </p>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div
+            class="btn btn-outline-danger"
+            (click)="deleteProjectData(project)"
+          >
+            Törlés
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Új projekt modal -->
+  <div
+    class="modal fade"
+    id="newProjectModal"
+    tabindex="-1"
+    aria-labelledby="newProjectLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="newProjectLabel">
+            Új Projekt Létrehozása
+          </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label for="title" class="form-label">Cím</label>
+              <input
+                type="text"
+                class="form-control"
+                id="title"
+                [(ngModel)]="title"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="description" class="form-label">Leírás</label>
+              <input
+                type="text"
+                class="form-control"
+                id="description"
+                [(ngModel)]="description"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="startDate" class="form-label">Kezdési dátum</label>
+              <input
+                type="date"
+                class="form-control"
+                id="startDate"
+                [(ngModel)]="startDate"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+
+            <!-- Új növény hozzáadása mező -->
+            <div class="mb-3">
+              <label for="plantName" class="form-label">Növény hozzáadása</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="plantName"
+                  [(ngModel)]="newPlant"
+                  [ngModelOptions]="{ standalone: true }"
+                  placeholder="Növény neve"
+                />
+                <button class="btn btn-outline-primary" type="button" (click)="addPlant()">
+                  Hozzáadás
+                </button>
+              </div>
+            </div>
+
+            <!-- Hozzáadott növények listája -->
+            <div *ngIf="relatedPlants.length > 0" class="mb-3">
+              <label class="form-label">Kapcsolódó növények:</label>
+              <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let plant of relatedPlants; let i = index">
+                  🌿 {{ plant }}
+                  <button type="button" class="btn btn-sm btn-outline-danger" (click)="removePlant(i)">×</button>
+                </li>
+              </ul>
+            </div>
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Bezárás
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-dismiss="modal"
+            (click)="createProjectData()"
+          >
+            Mentés
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

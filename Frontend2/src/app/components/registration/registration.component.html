@@ -1,0 +1,31 @@
+
+<div class="main_component">
+    <h1>Üdv a Regisztráción!</h1>
+    
+    <form [formGroup]="signUpForm" (keyup.enter)="onSubmit()">
+        <div class="forms">
+            <mat-form-field><mat-label for="email">Email: </mat-label><input matInput id="email" type="email" formControlName="email" /></mat-form-field>
+            <mat-form-field><mat-label for="name">Név: </mat-label><input matInput id="name" type="text" formControlName="name" /></mat-form-field>
+            <mat-form-field><mat-label for="nickname">Becenév: </mat-label><input matInput id="nickname" type="text" formControlName="nickname" /></mat-form-field>
+            <mat-form-field><mat-label for="address">Cím: </mat-label><input matInput id="address" type="text" formControlName="address" /></mat-form-field>
+            <mat-form-field><mat-label for="password">Jelszó: </mat-label><input matInput id="password" type="password" formControlName="password" /></mat-form-field>
+            <mat-form-field><mat-label for="repassword">Jelszó újra: </mat-label><input matInput id="repassword" type="password" formControlName="repassword" /></mat-form-field>
+        </div>
+    </form>
+    
+
+    <span>
+        <button mat-fab extended color="accent" type="submit" (click)="onSubmit()"><mat-icon>save</mat-icon>Mentés</button>
+        
+    </span>
+    <mat-list>
+      <mat-list-item>Legyél egy új közösség tagja!</mat-list-item>
+      <mat-divider></mat-divider>
+      <mat-list-item>Kertészkedj velünk!</mat-list-item>
+    </mat-list>
+
+    
+</div>
+
+
+

@@ -1,0 +1,135 @@
+.container-fluid {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to bottom right, #e4f9e1, #d7f2d1);
+  min-height: 100vh;
+  padding-bottom: 3rem;
+}
+
+.navbar {
+    max-height: 15vh;
+  background-color: #cbeac2 !important;
+  border-bottom: 2px solid #a8d4a2;
+  box-shadow: 0 2px 6px rgba(50, 85, 61, 0.2);
+
+  .navbar-brand {
+    color: #2e5d38;
+    font-weight: bold;
+    font-size: 1.4rem;
+  }
+
+  .btn-outline-success {
+    border-color: #69b767;
+    color: #3e6c47;
+    margin-left: 0.5rem;
+    transition: 0.3s ease;
+
+    &:hover {
+      background-color: #69b767;
+      color: white;
+    }
+  }
+}
+
+.card {
+  border-radius: 16px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(93, 150, 103, 0.15);
+  margin-bottom: 2rem;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.01);
+  }
+
+  .card-title {
+    color: #3d7a4e;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .card-subtitle {
+    font-size: 0.9rem;
+    color: #6b8c73;
+  }
+
+  .card-text {
+    font-size: 1rem;
+    color: #2f4f37;
+    margin-top: 0.5rem;
+  }
+
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    background-color: #f1f9f0;
+    border-top: 1px solid #d7e8d5;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+
+    .btn {
+      font-weight: 500;
+      padding: 0.4rem 0.8rem;
+    }
+
+    .btn-outline-primary {
+      border-color: #4c9e79;
+      color: #3a7756;
+
+      &:hover {
+        background-color: #4c9e79;
+        color: white;
+      }
+    }
+
+    .btn-outline-danger {
+      border-color: #cd5c5c;
+      color: #a94442;
+
+      &:hover {
+        background-color: #cd5c5c;
+        color: white;
+      }
+    }
+  }
+}
+
+.modal-content {
+  background-color: #f4fff3;
+  border-radius: 20px;
+  border: 2px solid #bde5bb;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+  background-color: #dff5dc;
+  border-bottom: 1px solid #b4ddb0;
+
+  .modal-title {
+    color: #3d684a;
+    font-weight: bold;
+  }
+}
+
+.modal-footer {
+  background-color: #e8f9e7;
+  border-top: 1px solid #c9e7c7;
+}
+
+.form-control {
+  border-radius: 10px;
+  border: 1px solid #c0ddbe;
+
+  &:focus {
+    border-color: #76c076;
+    box-shadow: 0 0 0 0.2rem rgba(118, 192, 118, 0.25);
+  }
+}
+
+label.form-label {
+  color: #4d7c59;
+  font-weight: 500;
+}
+h2 {
+  color: darkgreen;
+}

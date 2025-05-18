@@ -1,0 +1,296 @@
+<div class="container-fluid">
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a href="#" class="navbar-brand">Növénykereső</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <form class="d-flex me-3 ms-auto">
+          <button
+            class="btn btn-outline-success me-2"
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#newPostModal"
+            *ngIf="userRole"
+          >
+            Új Növény Regisztráció
+          </button>
+
+          <button
+            class="btn btn-outline-success me-2"
+            type="button"
+            (click)="goBack()"
+          >
+            Fórum
+          </button>
+
+          <button
+            class="btn btn-outline-success me-2"
+            type="button"
+            (click)="goProjekt()"
+          >
+            Projekteim
+          </button>
+
+          <button
+            class="btn btn-outline-danger"
+            type="button"
+            (click)="logout()"
+          >
+            Kijelentkezés
+          </button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Növénykártyák -->
+  <div class="row mt-3 p-1">
+    <div class="col-md-3 col-sm-12" *ngFor="let plant of allPlants">
+      <div class="card" style="width: 22rem">
+        <div class="card-body">
+          <h5 class="card-title">{{ plant.commonName }}</h5>
+          <h6 class="card-subtitle mb-2 text-body-secondary">
+            {{ plant.scientificName }}
+          </h6>
+          <span class="title">Leírás</span>
+          <p class="card-text">{{ plant.description }}</p>
+          <span class="title">Gondozás</span>
+          <p class="card-text">{{ plant.careInstructions }}</p>
+          <span class="title">Kártevő információ</span>
+          <p class="card-text">{{ plant.pestInfo }}</p>
+          <span class="badge bg-{{ plant.isVerified ? 'success' : 'secondary' }}">
+            {{ plant.isVerified ? 'Ellenőrzött' : 'Nem ellenőrzött' }}
+          </span>
+        </div>
+        <div class="card-footer d-flex justify-content-between" *ngIf="userRole">
+          <button
+            class="btn btn-outline-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#editPostModal"
+            type="button"
+            (click)="editPlant(plant)"
+          >
+            Módosítás
+          </button>
+          <div class="btn btn-outline-danger" (click)="deletePlantData(plant)">
+            Törlés
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Új növény modal -->
+  <div
+    class="modal fade"
+    id="newPostModal"
+    tabindex="-1"
+    aria-labelledby="newModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="newModalLabel">Új növény hozzáadása</h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label class="form-label">Közönséges név</label>
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="commonName"
+                [ngModelOptions]="{standalone: true}"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Tudományos név</label>
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="scientificName"
+                [ngModelOptions]="{standalone: true}"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Leírás</label>
+              <textarea
+                class="form-control"
+                rows="2"
+                [(ngModel)]="description"
+                [ngModelOptions]="{standalone: true}"
+              ></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Gondozás</label>
+              <textarea
+                class="form-control"
+                rows="2"
+                [(ngModel)]="careInstructions"
+                [ngModelOptions]="{standalone: true}"
+              ></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Kártevő információ</label>
+              <textarea
+                class="form-control"
+                rows="2"
+                [(ngModel)]="pestInfo"
+                [ngModelOptions]="{standalone: true}"
+              ></textarea>
+            </div>
+
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                [(ngModel)]="isVerified"
+                [ngModelOptions]="{standalone: true}"
+                id="newIsVerified"
+              />
+              <label class="form-check-label" for="newIsVerified">
+                Ellenőrzött
+              </label>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Bezárás
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-dismiss="modal"
+            (click)="createPlantData()"
+          >
+            Mentés
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Növény szerkesztés modal -->
+  <div
+    class="modal fade"
+    id="editPostModal"
+    tabindex="-1"
+    aria-labelledby="editModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="editModalLabel">Növény módosítása</h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label class="form-label">Közönséges név</label>
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="commonName"
+                [ngModelOptions]="{standalone: true}"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Tudományos név</label>
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="scientificName"
+                [ngModelOptions]="{standalone: true}"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Leírás</label>
+              <textarea
+                class="form-control"
+                rows="2"
+                [(ngModel)]="description"
+                [ngModelOptions]="{standalone: true}"
+              ></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Gondozás</label>
+              <textarea
+                class="form-control"
+                rows="2"
+                [(ngModel)]="careInstructions"
+                [ngModelOptions]="{standalone: true}"
+              ></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Kártevő információ</label>
+              <textarea
+                class="form-control"
+                rows="2"
+                [(ngModel)]="pestInfo"
+                [ngModelOptions]="{standalone: true}"
+              ></textarea>
+            </div>
+
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                [(ngModel)]="isVerified"
+                [ngModelOptions]="{standalone: true}"
+                id="editIsVerified"
+              />
+              <label class="form-check-label" for="editIsVerified">
+                Ellenőrzött
+              </label>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Bezárás
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-dismiss="modal"
+            (click)="updatePlant()"
+          >
+            Mentés
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
